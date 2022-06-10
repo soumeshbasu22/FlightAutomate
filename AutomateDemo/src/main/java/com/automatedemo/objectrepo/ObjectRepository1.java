@@ -26,6 +26,7 @@ public class ObjectRepository1 {
 	public static By preffirst=By.cssSelector("input[name='servClass'][value='First']");
 	public static By airline=By.cssSelector("input[name='airline']");
 	public static By continueb=By.xpath("//*[@name='findFlights']");
+	public int flag=0;
 	
 	public ObjectRepository1(WebDriver driver) {
 		// TODO Auto-generated constructor stub
@@ -56,18 +57,5 @@ public class ObjectRepository1 {
 		Select s5=new Select(sel5);
 		s5.selectByValue(return_on_day);
 		driver.findElement(continueb).click();
-		WebElement table=driver.findElement(By.xpath("/html/body/div[2]/table/tbody/tr/td[2]/table/tbody/tr[4]/td/table/tbody/tr[1]/td[2]/table"));
-		List<WebElement>rows=table.findElements(By.tagName("tr"));
-		for(int k=0;k<=rows.size();k++) {
-			List<WebElement>cols=driver.findElements(By.tagName("td"));
-			for(int m=0;m<cols.size();m++) {
-				if(cols.get(m).getText().contains("No Seats")) {
-				
-				System.out.println("No Seats Available to book");
-			}}
-		}
-		List<WebElement>links=driver.findElements(By.xpath("//*[@href='index.php']"));
-		
-		links.get(2).click();
-	}
+			}
 }

@@ -16,12 +16,23 @@ import org.testng.annotations.Test;
 import com.automatedemo.browser.BrowserFactory;
 import com.automatedemo.objectrepo.ObjectRepository;
 import com.automatedemo.objectrepo.ObjectRepository1;
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.Status;
+import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 
 public class LoginTest {
 	WebDriver driver;
+	ExtentTest test;
+	ExtentReports report;
+	
 	@BeforeTest
 	public void SetUp() {
 		driver=BrowserFactory.StartApp(driver, "chrome", "https://demo.guru99.com/test/newtours/");
+		String filepath="C:\\Users\\soumesh\\eclipse-workspace\\AutomateDemo\\Reports\\flightreport.html";
+		ExtentHtmlReporter html=new ExtentHtmlReporter(filepath);
+		report=new ExtentReports();
+		report.attachReporter(html);
 	}
 	@Test(priority=1)
 	public void regtest() throws Exception {
@@ -88,6 +99,7 @@ public class LoginTest {
 	}
 	@Test(priority=3)
 	public void flydetail() throws Exception {
+		test=report.createTest("Flight_Booking");
 		ObjectRepository1 or=new ObjectRepository1(driver);
 		String filepath="C:\\Users\\soumesh\\eclipse-workspace\\AutomateDemo\\FlightDetails.xlsx";
 		FileInputStream fi=new FileInputStream(filepath);
@@ -103,8 +115,25 @@ public class LoginTest {
 			
 			or.flightbook(passenger, arrivalmth, arrivaldt, retmnth, retdt);
 			
+			WebElement table=driver.findElement(By.xpath("/html/body/div[2]/table/tbody/tr/td[2]/table/tbody/tr[4]/td/table/tbody/tr[1]/td[2]/table"));
+			List<WebElement>rows=table.findElements(By.tagName("tr"));
+			for(int k=0;k<rows.size();k++) {
+				//List<WebElement>cols=driver.findElements(By.tagName("td"));
+				//for(int m=0;m<cols.size();m++) {
+					if(rows.get(k).getText().contains("No Seats")) {
+					
+					System.out.println("No Seats Available to book");
+					//flag=1;
+					test.log(Status.FAIL, "No seats available");
+				}}
+			//}
 			
+			List<WebElement>links=driver.findElements(By.xpath("//*[@href='index.php']"));
+			
+			links.get(2).click();
+
 		}wb.close();
+		report.flush();
 	}
 	
 	public static void main(String[] args) throws Exception {
