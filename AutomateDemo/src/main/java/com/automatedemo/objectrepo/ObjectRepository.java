@@ -48,11 +48,12 @@ public class ObjectRepository {
 		Select s=new Select(driver.findElement(country));
 		s.selectByValue("INDIA");;
 	}
-	public void registration(String username,String pwd,String cpwd) {
+	public void registration(String username,String pwd,String cpwd) throws InterruptedException {
 		driver.findElement(Uname).sendKeys(username);
 		driver.findElement(Pwd).sendKeys(pwd);
 		driver.findElement(CPwd).sendKeys(cpwd);
 		driver.findElement(submit).click();
+		Thread.sleep(3000);
 		
 	}
 	public void logintest(String username,String password) {

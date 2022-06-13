@@ -36,6 +36,7 @@ public class LoginTest {
 	}
 	@Test(priority=1)
 	public void regtest() throws Exception {
+		test=report.createTest("Registration");
 		ObjectRepository or=new ObjectRepository(driver);
 		String filepath="C:\\Users\\soumesh\\eclipse-workspace\\AutomateDemo\\RegSheet.xlsx";
 		FileInputStream fi=new FileInputStream(filepath);
@@ -68,17 +69,23 @@ public class LoginTest {
 			try{
 			if(driver.findElement(By.xpath("//span[text()='PAssword and con.password does not match']")).isDisplayed()) {
 				System.out.println("passwords dont match");
+				test.log(Status.FAIL, "Passwords dont match");
 			}
 			}
 			catch(Exception e) {
+				
 				System.out.println("continue");
 				String text=driver.findElement(By.xpath("//b[contains(text(),'SBM')]")).getText();
 				System.out.println(text);
+				test.log(Status.PASS, "Registratoion success");
+				
 				//or.logintest(uname, pwd);
 				driver.findElement(or.RegLink).click();
+				
 			}
-			
+		Thread.sleep(3000);	
 		}wb1.close();
+		report.flush();
 		Thread.sleep(3000);
 	}
 	@Test(priority=2)
@@ -139,7 +146,7 @@ public class LoginTest {
 	public static void main(String[] args) throws Exception {
 		LoginTest lt=new LoginTest();
 		lt.SetUp();
-		//lt.regtest();
+		lt.regtest();
 		//lt.logtest();
 		lt.flydetail();
 		}
