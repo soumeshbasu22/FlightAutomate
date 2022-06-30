@@ -8,6 +8,7 @@ import java.util.List;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.BeforeTest;
@@ -72,7 +73,7 @@ public class LoginTest {
 				test.log(Status.FAIL, "Passwords dont match");
 			}
 			}
-			catch(Exception e) {
+			catch(NoSuchElementException e) {
 				
 				System.out.println("continue");
 				String text=driver.findElement(By.xpath("//b[contains(text(),'SBM')]")).getText();
@@ -148,6 +149,6 @@ public class LoginTest {
 		lt.SetUp();
 		lt.regtest();
 		//lt.logtest();
-		lt.flydetail();
+		//lt.flydetail();
 		}
 }
