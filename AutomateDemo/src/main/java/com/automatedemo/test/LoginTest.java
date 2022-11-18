@@ -148,7 +148,7 @@ public class LoginTest {
 		LoginTest lt=new LoginTest();
 		lt.SetUp();
 		lt.regtest();
-		//lt.logtest();
-		//lt.flydetail();
+		lt.logtest();
+		lt.flydetail();
 		}
 }
